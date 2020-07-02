@@ -1,15 +1,20 @@
 package com.example.demo.model;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,6 +35,8 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name ="users")
+
+
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,13 +44,25 @@ public class User {
 	private String username;
 	private String passwork;
 	private int id_personnel;
-	private int id_account;
+	
 	
 	
 	@OneToOne(targetEntity = Personnel.class,cascade = CascadeType.ALL,orphanRemoval = true)
 	@JoinColumn(name = "id_u",referencedColumnName ="id_u")
 	
 	private Personnel personnel;
+	
+	// @OneToMany(fetch = FetchType.EAGER, mappedBy = "users")
+/*	private Set<User_Role> usersRoleses = new HashSet<User_Role>(0);
+
+	  public Set<User_Role> getUsersRoleses() {
+	    return this.usersRoleses;
+	  }
+	  public void setUsersRoleses(final Set<User_Role> usersRoleses) {
+	    this.usersRoleses = usersRoleses;
+	  }
+*/
+	
 	public int getId_u() {
 		return id_u;
 	}
@@ -68,32 +87,33 @@ public class User {
 	public void setId_personnel(int id_personnel) {
 		this.id_personnel = id_personnel;
 	}
-	public int getId_account() {
-		return id_account;
-	}
-	public void setId_account(int id_account) {
-		this.id_account = id_account;
-	}
+	
 	
 	public User() {
 		
 	}
-	public User(int id_u, String username, String passwork, int id_personnel, int id_account, Personnel personnel) {
+	
+	
+	
+	public User(int id_u, String username, String passwork, int id_personnel, Personnel personnel) {
 		super();
 		this.id_u = id_u;
 		this.username = username;
 		this.passwork = passwork;
 		this.id_personnel = id_personnel;
-		this.id_account = id_account;
 		this.personnel = personnel;
 	}
 
-	/*public List<GrantedAuthority> getAuthorities() {
+	@Transient
+	  public List<GrantedAuthority> getAuthorities() {
 	    List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-	    for (String role : roles) {
-	      authorities.add(new SimpleGrantedAuthority(role));
-	    }
+	   // for (Role role: this.usersRoleses) {
+	      authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+	   // }
+	 
 	    return authorities;
-	  }*/
+	  }
 
+
+	
 }

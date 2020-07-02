@@ -27,6 +27,7 @@ import com.example.demo.domain.ApiResponse;
 import com.example.demo.dto.Add_personnel;
 import com.example.demo.model.Personnel;
 import com.example.demo.model.User;
+import com.example.demo.util.CryptWithMD5;
 import com.example.demo.util.EmailValidator;
 import com.example.demo.util.Reporter;
 import com.example.demo.util.ReturnObject;
@@ -67,6 +68,7 @@ public class APIController {
 	    try {
 			if (personnelServerI.loginAPI(user.getUsername(), user.getPasswork()).getCode()==1) {
 				result=jwtService.generateTokenLogin(user.getUsername());
+				//result=user.getUsername();
 				//result = "TESTif";
 				httpStatus=HttpStatus.OK;
 			}
@@ -91,17 +93,27 @@ public class APIController {
 	}
 	/*Them user */
 	@RequestMapping(value = "/user/",method = RequestMethod.POST)
-	public ResponseEntity<ReturnObject>ADD(@Valid @RequestBody Personnel personnel){
+	public ResponseEntity<ApiResponse>ADD(@Valid @RequestBody Personnel personnel){
+		
+		return new ResponseEntity<ApiResponse>(personnelServerI.addPersonnel(personnel),HttpStatus.OK);
+		/*User user=personnel.getUser();
+		user.setPasswork(new CryptWithMD5().cryptWithMD5(user.getPasswork()));
+		
+		//user.setPasswork(personnel.getUser().getPasswork());
 		
 		if(personnel.getAddress()==null || personnel.getAddress()==null)
 		{
 			return  new ResponseEntity<ReturnObject>( new ReturnObject(0,"ERROR ADD",null),HttpStatus.OK);
 		}
 		else {
+			
+			personnel.setUser(user);
+			////personnel.setName(user);
+			//personnel.setUser(personnel.getUser().setPasswork(new CryptWithMD5().cryptWithMD5(personnel.getUser().getPasswork()));
 			personnelRepository.save(personnel);		
 		}
 		
-		return new ResponseEntity<ReturnObject>( new ReturnObject(1,"success",personnel),HttpStatus.OK);
+		return new ResponseEntity<ReturnObject>( new ReturnObject(1,"success",personnel),HttpStatus.OK);*/
 	}
 	/*update*/
 	@RequestMapping(value = "/user/{id}",method = RequestMethod.PUT)

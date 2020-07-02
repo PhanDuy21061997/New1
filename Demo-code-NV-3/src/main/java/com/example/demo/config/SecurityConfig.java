@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    http.authorizeRequests().antMatchers("/api/user/loginAPI**").permitAll();
 	    http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
 	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-	        .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+	        .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_ADMIN')")//.permitAll()//phan quyen
 	        .antMatchers(HttpMethod.POST, "/api/**").permitAll()//phan quyen
 	        .antMatchers(HttpMethod.DELETE, "/api/**").permitAll().and()//phan quyen
 	       // .anyRequest().authenticated().and()
