@@ -12,49 +12,56 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user_roles")
 public class User_Role {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	
-	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	 
-	// @ManyToOne(fetch = FetchType.EAGER)
-	//  @JoinColumn(name = "users")
-	 private User user;
-	public User getUser() {
+
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
+
+	/*public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
-	}
-	//@ManyToOne(fetch = FetchType.EAGER)
-	//@JoinColumn(name = "roles")
+	}*/
+
+	@ManyToOne
+	@JoinColumn(name = "role_id", nullable = false)
 	private Role role;
+
 	public Role getRole() {
 		return role;
 	}
+
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	public User_Role(User user, Role role) {
+
+	public User_Role() {
+
+	}
+
+	/*public User_Role(int id, User user, Role role) {
 		super();
+		this.id = id;
 		this.user = user;
 		this.role = role;
-	}
-	public User_Role() {
+	}*/
+	public User_Role(Role role) {
 		
+		this.role = role;
 	}
-	
-	
-
-	
 
 }

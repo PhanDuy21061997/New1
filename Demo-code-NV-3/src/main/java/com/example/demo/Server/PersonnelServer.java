@@ -21,22 +21,19 @@ import lombok.experimental.var;
 @Service
 public class PersonnelServer implements PersonnelServerI {
 
-	
-	@Autowired 
-	PersonnelRepository personnelRepository ;
-	
-	
-	
+	@Autowired
+	PersonnelRepository personnelRepository;
+
 	@Override
 	public Personnel login(String username, String passwork) {
-		// TODO Auto-generated method stub	
-			
-			try {
-				personnelRepository.login(username, passwork);
-			} catch (Exception e) {
-				Reporter.getErrorLogger().error("personnelRepository.login(username, passwork)",e);
-			}
-			return personnelRepository.login(username, passwork);
+		// TODO Auto-generated method stub
+
+		try {
+			personnelRepository.login(username, passwork);
+		} catch (Exception e) {
+			Reporter.getErrorLogger().error("personnelRepository.login(username, passwork)", e);
+		}
+		return personnelRepository.login(username, passwork);
 	}
 
 	@Override
@@ -47,31 +44,29 @@ public class PersonnelServer implements PersonnelServerI {
 
 	@Override
 	public ReturnObject loginAPI(String username, String passwork) {
-		
-		String md5_passwork=new  CryptWithMD5().cryptWithMD5(passwork);
-		Personnel personnel= personnelRepository.login(username, md5_passwork);
-	
-		if(personnel==null)
-		{
-			return new ReturnObject(0, "Error LOGIN",null);
+
+		String md5_passwork = new CryptWithMD5().cryptWithMD5(passwork);
+		Personnel personnel = personnelRepository.login(username, md5_passwork);
+
+		if (personnel == null) {
+			return new ReturnObject(0, "Error LOGIN", null);
 
 		}
-		return new ReturnObject(1,"success",personnel);
+		return new ReturnObject(1, "success", personnel);
 	}
 
 	@Override
 	public ApiResponse addPersonnel(Personnel personnel) {
-		User user=personnel.getUser();
+		User user = personnel.getUser();
 		user.setPasswork(new CryptWithMD5().cryptWithMD5(user.getPasswork()));
-		boolean  email=new EmailValidator().validate(personnel.getEmail());
-		if(personnel.getAddress()==null||personnel.getEmail()==null||personnel.getName()==null||email==false)
-		{
+		boolean email = new EmailValidator().validate(personnel.getEmail());
+		if (personnel.getAddress() == null || personnel.getEmail() == null || personnel.getName() == null
+				|| email == false) {
 			return new ApiResponse(0, "ERROR");
-		}
-		else {
+		} else {
 			personnelRepository.save(personnel);
 		}
-		
+
 		return new ApiResponse(1, "SUCCESS");
 	}
 

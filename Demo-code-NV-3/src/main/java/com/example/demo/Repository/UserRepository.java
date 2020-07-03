@@ -11,8 +11,8 @@ import com.example.demo.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
-	@Query(value ="select p.name from users e join personnel p on e.id_personnel=p.id_p",nativeQuery = true)
-	List<User>find_id_user();
+	/*@Query(value ="select p.name from users e join personnel p on e.id_personnel=p.id_p",nativeQuery = true)
+	List<User>find_id_user();*/
 	@Query(value ="select * from users e where e.username=:username",nativeQuery = true)
 	User find_username(@Param("username") String username);
 }
