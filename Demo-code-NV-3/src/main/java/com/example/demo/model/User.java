@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -53,7 +54,7 @@ public class User {
 	private Personnel personnel;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<User_Role> usersRoleses;
+	private Set<User_Role> usersRoleses =new HashSet<User_Role>(0);
 
 	public Set<User_Role> getUsersRoleses() {
 		return this.usersRoleses;

@@ -40,22 +40,22 @@ public class Role implements Serializable {
 		this.id_r = id_r;
 	}
 
-	@OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<User_Role> usersRoleses ;
+	/*@OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<User_Role> usersRoleses =new HashSet<User_Role>(0);*/
 
-	public Set<User_Role> getUsersRoleses() {
+	/*public Set<User_Role> getUsersRoleses() {
 		return this.usersRoleses;
 	}
 
 	public void setUsersRoleses(Set<User_Role> usersRoleses) {
 		this.usersRoleses = usersRoleses;
-	}
+	}*/
 
-	public Role(String name, Set<User_Role> usersRoleses) {
+	/*public Role(String name, Set<User_Role> usersRoleses) {
 		super();
 		this.name = name;
 		this.usersRoleses = usersRoleses;
-	}
+	}*/
 	
 
 	public Role() {
