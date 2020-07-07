@@ -3,6 +3,8 @@ package com.example.demo.Server;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Repository.PersonnelRepository;
@@ -23,6 +25,9 @@ public class PersonnelServer implements PersonnelServerI {
 
 	@Autowired
 	PersonnelRepository personnelRepository;
+	/*
+	 * @Autowired UserServerI userServerI ;
+	 */
 
 	@Override
 	public Personnel login(String username, String passwork) {
@@ -63,11 +68,35 @@ public class PersonnelServer implements PersonnelServerI {
 		if (personnel.getAddress() == null || personnel.getEmail() == null || personnel.getName() == null
 				|| email == false) {
 			return new ApiResponse(0, "ERROR");
-		} else {
+		}
+		/*
+		 * else if (userServerI.findUserName(user.getUsername())==false) { return new
+		 * ApiResponse(0, "ERROR Exist UserName"); }
+		 */
+		else {
 			personnelRepository.save(personnel);
 		}
 
 		return new ApiResponse(1, "SUCCESS");
+	}
+
+	@Override
+	public ApiResponse UpdatePersonnel(Personnel personnel, int id) {
+		Personnel personnel2 = personnelRepository.getOne(id);
+		if (personnel.getAddress() == null || personnel.getAddress() == null || personnel2 == null) {
+			return new ApiResponse(1, "ERROR NULL");
+		}
+		if (new EmailValidator().validate(personnel.getEmail()) == false) {
+			return new ApiResponse(1, "ERROR EMAIL");
+		} else {
+			personnel2.setDate_of_birth(personnel.getDate_of_birth());
+			personnel2.setEmail(personnel.getEmail());
+			personnel2.setAddress(personnel.getAddress());
+			personnel2.setName(personnel.getName());
+			personnelRepository.save(personnel2);
+		}
+
+		return new ApiResponse(0, "SUCCESS");
 	}
 
 }

@@ -36,6 +36,9 @@ import lombok.ToString;
 @ToString*/
 @Entity
 @Table(name = "users")
+@Data
+@NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 
 public class User {
 	@Id
@@ -53,7 +56,7 @@ public class User {
 	@JoinColumn(name = "id_personnel", insertable = false, updatable = false)
 	private Personnel personnel;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<User_Role> usersRoleses =new HashSet<User_Role>(0);
 
 	public Set<User_Role> getUsersRoleses() {

@@ -12,5 +12,7 @@ public interface PersonnelServerI {
 	List<Personnel> find_manage_p(int id_manage_p);
 	ReturnObject loginAPI(String username, String passwork);
 	ApiResponse addPersonnel(Personnel personnel);
+	ApiResponse UpdatePersonnel(Personnel personnel,int id);
+	
 	
 }
