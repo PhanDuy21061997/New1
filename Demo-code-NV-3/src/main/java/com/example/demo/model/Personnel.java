@@ -109,6 +109,7 @@ public class Personnel {
 		this.id_manage_p = id_manage_p;
 	}
 
+	
 	public Personnel(int id_p, String name, String address, String email, Date date_of_birth, int id_manage_p,
 			User user) {
 		super();
@@ -119,6 +120,14 @@ public class Personnel {
 		this.date_of_birth = date_of_birth;
 		this.id_manage_p = id_manage_p;
 		this.user = user;
+	}
+	public Personnel(int id_p, String name, String address, String email, Date date_of_birth) {
+		super();
+		this.id_p = id_p;
+		this.name = name;
+		this.address = address;
+		this.email = email;
+		this.date_of_birth = date_of_birth;
 	}
 
 }

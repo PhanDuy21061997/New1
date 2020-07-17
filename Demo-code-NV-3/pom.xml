@@ -91,7 +91,15 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		
-		
+		<dependency>
+        <groupId>com.fasterxml.jackson.dataformat</groupId>
+        <artifactId>jackson-dataformat-csv</artifactId>
+    </dependency>
+    <dependency>
+	<groupId>org.apache.commons</groupId>
+	<artifactId>commons-csv</artifactId>
+	<version>1.8</version>
+</dependency>
 		
 		<dependency>
     <groupId>javax.servlet</groupId>

@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 
 import com.example.demo.Repository.UserRepository;
 import com.example.demo.Server.JwtService;
+import com.example.demo.dto.CustomUser;
 
 public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
 	private final static String TOKEN_HEADER = "authorization";
@@ -38,8 +39,9 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
 				boolean accountNonExpired = true;
 				boolean credentialsNonExpired = true;
 				boolean accountNonLocked = true;
-				UserDetails userDetail = new User(username, user.getPasswork(), enabled, accountNonExpired,
-						credentialsNonExpired, accountNonLocked, user.getAuthorities());// sua
+				/*UserDetails userDetail = new User(username, user.getPasswork(), enabled, accountNonExpired,
+						credentialsNonExpired, accountNonLocked, user.getAuthorities());*/// sua
+				UserDetails userDetail=(UserDetails) new CustomUser(username, user.getPasswork(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked,  user.getAuthorities(), user.getId_personnel());
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetail,
 						null, userDetail.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));

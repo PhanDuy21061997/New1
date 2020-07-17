@@ -1,5 +1,6 @@
 package com.example.demo.Server;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,14 @@ public class PersonnelServer implements PersonnelServerI {
 	}
 
 	@Override
-	public List<Personnel> find_manage_p(int id_manage_p) {
-		// TODO Auto-generated method stub
-		return null;
+	public ReturnObject find_manage_p(int id_manage_p) {
+		List<Personnel>list=new ArrayList<Personnel>();
+		list=personnelRepository.find_manage_p(id_manage_p);
+		if (list.size()==0) {
+			return new ReturnObject(1," ERROR", null);
+		}
+		return new ReturnObject(0," SUCCESS", list);
+	
 	}
 
 	@Override
@@ -97,6 +103,18 @@ public class PersonnelServer implements PersonnelServerI {
 		}
 
 		return new ApiResponse(0, "SUCCESS");
+	}
+
+	@Override
+	public ReturnObject GetuserID(int id) {
+		Personnel personnel = personnelRepository.getOne(id);
+		Personnel personnel1 = new Personnel(personnel.getId_p(), personnel.getName(), personnel.getAddress(),
+				personnel.getEmail(), personnel.getDate_of_birth());
+
+		if (personnel == null) {
+			return new ReturnObject(1, "Error does not exist", null);
+		}
+		return new ReturnObject(0, "SUCCESS", personnel1);
 	}
 
 }

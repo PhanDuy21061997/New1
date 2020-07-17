@@ -9,10 +9,12 @@ import com.example.demo.util.ReturnObject;
 public interface PersonnelServerI {
 
 	Personnel login(String username, String passwork);
-	List<Personnel> find_manage_p(int id_manage_p);
+	ReturnObject find_manage_p(int id_manage_p);
 	ReturnObject loginAPI(String username, String passwork);
 	ApiResponse addPersonnel(Personnel personnel);
 	ApiResponse UpdatePersonnel(Personnel personnel,int id);
+	ReturnObject GetuserID(int id);
+	
 	
 	
 }
