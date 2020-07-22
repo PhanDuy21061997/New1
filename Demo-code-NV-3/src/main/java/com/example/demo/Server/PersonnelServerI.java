@@ -3,6 +3,7 @@ package com.example.demo.Server;
 import java.util.List;
 
 import com.example.demo.domain.ApiResponse;
+import com.example.demo.dto.Page;
 import com.example.demo.model.Personnel;
 import com.example.demo.util.ReturnObject;
 
@@ -14,7 +15,8 @@ public interface PersonnelServerI {
 	ApiResponse addPersonnel(Personnel personnel);
 	ApiResponse UpdatePersonnel(Personnel personnel,int id);
 	ReturnObject GetuserID(int id);
-	
+	Page Paging(int page,int number);
+	ApiResponse Delete_personnel(int id);
 	
 	
 }

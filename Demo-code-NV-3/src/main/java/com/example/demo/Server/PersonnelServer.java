@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.Repository.ManageRepository;
 import com.example.demo.Repository.PersonnelRepository;
 import com.example.demo.domain.ApiResponse;
+import com.example.demo.dto.Page;
 import com.example.demo.model.Personnel;
 import com.example.demo.model.User;
 import com.example.demo.util.CheckObject;
@@ -26,6 +28,8 @@ public class PersonnelServer implements PersonnelServerI {
 
 	@Autowired
 	PersonnelRepository personnelRepository;
+	@Autowired
+	ManageRepository manageRepository;
 	/*
 	 * @Autowired UserServerI userServerI ;
 	 */
@@ -44,13 +48,13 @@ public class PersonnelServer implements PersonnelServerI {
 
 	@Override
 	public ReturnObject find_manage_p(int id_manage_p) {
-		List<Personnel>list=new ArrayList<Personnel>();
-		list=personnelRepository.find_manage_p(id_manage_p);
-		if (list.size()==0) {
-			return new ReturnObject(1," ERROR", null);
+		List<Personnel> list = new ArrayList<Personnel>();
+		list = personnelRepository.find_manage_p(id_manage_p);
+		if (list.size() == 0) {
+			return new ReturnObject(1, " ERROR", null);
 		}
-		return new ReturnObject(0," SUCCESS", list);
-	
+		return new ReturnObject(0, " SUCCESS", list);
+
 	}
 
 	@Override
@@ -115,6 +119,36 @@ public class PersonnelServer implements PersonnelServerI {
 			return new ReturnObject(1, "Error does not exist", null);
 		}
 		return new ReturnObject(0, "SUCCESS", personnel1);
+	}
+
+	@Override
+	public Page Paging(int page, int number) {
+		int total_number = personnelRepository.totalNumber();
+		int total_page = total_number / number;
+		List<Personnel> list = new ArrayList<Personnel>();
+		int someOffset = 0;
+		if (page > 0 && page <= total_page && page > 0 && number > 0) {
+			if (page > 1) {
+				someOffset = (page * number) - (number);
+			}
+		} else {
+			return new Page(0, 0, 0, new ApiResponse(1, "ERROR page "));
+		}
+
+		list = personnelRepository.Paging(number, someOffset);
+		return new Page(number, page, total_page, list);
+	}
+
+	@Override
+	public ApiResponse Delete_personnel(int id) {
+		Personnel personnel = personnelRepository.getOne(id);
+		if (!(manageRepository.check_id_manage(id))) {
+			return new ApiResponse(1, "ERROR  delete");
+		} else if (personnel == null) {
+			return new ApiResponse(0, "ERROR in ID");
+		}
+		personnelRepository.deleteById(id);
+		return new ApiResponse(0, "success delete");
 	}
 
 }

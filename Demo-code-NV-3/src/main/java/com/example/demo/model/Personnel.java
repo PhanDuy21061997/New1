@@ -49,6 +49,19 @@ public class Personnel {
 	@OneToOne(mappedBy = "personnel", cascade = CascadeType.ALL, orphanRemoval = true)
 	private User user;
 
+	@OneToOne(targetEntity = Manage.class, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "id_manage_p", insertable = false, updatable = false)
+	private Manage manage;
+	
+	
+	public Manage getManage() {
+		return manage;
+	}
+
+	public void setManage(Manage manage) {
+		this.manage = manage;
+	}
+
 	public Personnel() {
 
 	}
@@ -120,6 +133,17 @@ public class Personnel {
 		this.date_of_birth = date_of_birth;
 		this.id_manage_p = id_manage_p;
 		this.user = user;
+	}
+	public Personnel(int id_p, String name, String address, String email, Date date_of_birth, int id_manage_p
+			) {
+		super();
+		this.id_p = id_p;
+		this.name = name;
+		this.address = address;
+		this.email = email;
+		this.date_of_birth = date_of_birth;
+		this.id_manage_p = id_manage_p;
+		
 	}
 	public Personnel(int id_p, String name, String address, String email, Date date_of_birth) {
 		super();
