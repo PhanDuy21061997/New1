@@ -123,6 +123,15 @@ public class User {
 		this.personnel = personnel;
 		this.usersRoleses = usersRoleses;
 	}
+	public User(int id_u, String username, String passwork, int id_personnel
+			) {
+		super();
+		this.id_u = id_u;
+		this.username = username;
+		this.passwork = passwork;
+		this.id_personnel = id_personnel;
+	
+	}
 
 	/*@Transient
 	public List<GrantedAuthority> getAuthorities() {
